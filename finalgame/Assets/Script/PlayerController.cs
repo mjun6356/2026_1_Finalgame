@@ -46,17 +46,18 @@ public class PlayerController : MonoBehaviour
         {
             if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
             {
-                if (input.x > 0)
-                {
+               
+                    if(input.x > 0)
                     ChangeSprites(spriteRight);
                     else
                         ChangeSprites(spriteLeft);
-                }
-                else
-                {
+            }  
+            else    
+            {      
                     if (input.y > 0)
                         ChangeSprites(spriteUp);
-                }
+                    else ChangeSprites(spriteDown);
+                
             } 
         }
 
