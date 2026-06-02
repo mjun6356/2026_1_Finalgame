@@ -4,8 +4,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("이동 설정")]
     public float walkSpeed = 4f;
     public float runSpeed = 10f;
+
+    [Header("플레이어 스탯")]
+    public int currentHP;
+    public int maxHP;
+    public int gold;
+    
 
     //[Header("이동 애니메이션 프레임")]
 
@@ -38,6 +45,37 @@ public class PlayerController : MonoBehaviour
        
     }
 
+    private void Start()
+    {
+       /* // 씬이 로드될 때 GameManager의 데이터를 플레이어에게 반영
+        if (GameManager.Instance != null)
+        {
+            // 1. 위치 복구 (저장된 위치가 있을 때만)
+            if (GameManager.Instance.currentData.playerPosition != Vector2.zero)
+            {
+                transform.position = GameManager.Instance.currentData.playerPosition;
+            }
+
+            // 2. 스탯 복구 (만약 게임을 처음 시작해서 MaxHP가 0이라면 기본값 세팅)
+            if (GameManager.Instance.currentData.playerMaxHP > 0)
+            {
+                currentHP = GameManager.Instance.currentData.playerHP;
+                maxHP = GameManager.Instance.currentData.playerMaxHP;
+                gold = GameManager.Instance.currentData.gold;
+            }
+            else
+            {
+                // [로그라이크 첫 시작] 기본 초기 능력치 설정
+                maxHP = 100;
+                currentHP = maxHP;
+                gold = 0;
+                
+                // 매니저 데이터도 초기값으로 갱신
+                SyncStatsToManager();
+            }
+        }*/
+    }
+
     //public void OnMove(InputValue value)
     //{
     //    input = value.Get<Vector2>();
@@ -46,7 +84,7 @@ public class PlayerController : MonoBehaviour
     //    {
     //        if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
     //        {
-               
+
     //                if(input.x > 0)
     //                ChangeSprites(spriteRight);
     //                else
@@ -57,7 +95,7 @@ public class PlayerController : MonoBehaviour
     //                if (input.y > 0)
     //                    ChangeSprites(spriteUp);
     //                else ChangeSprites(spriteDown);
-                
+
     //        } 
     //    }
 
