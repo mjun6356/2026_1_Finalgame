@@ -4,8 +4,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("이동 설정")]
     public float walkSpeed = 4f;
     public float runSpeed = 10f;
+
+    [Header("플레이어 스탯")]
+    public int maxHealth;
+    public int currentHealth;
+    public int attackPower;
+    public int defensePower;
+    public int gold;
+    public int goldMax;
 
     //[Header("이동 애니메이션 프레임")]
 
@@ -38,6 +47,31 @@ public class PlayerController : MonoBehaviour
        
     }
 
+    void Start()
+    {
+       if (GameManager.Instance != null)
+       {
+
+
+           // 기존 플레이어 정보를 사용
+           maxHealth = GameManager.Instance.currentData.playerMaxHP;
+           currentHealth = GameManager.Instance.currentData.playerHP;
+           attackPower = GameManager.Instance.currentData.playerAttackPower;
+           defensePower = GameManager.Instance.currentData.playerDefensePower;
+       }
+       else
+       {
+
+
+           // 기본값 설정
+           maxHealth = 100;
+           currentHealth = maxHealth;
+           attackPower = 10;
+           defensePower = 5;
+       }
+
+    }
+
     //public void OnMove(InputValue value)
     //{
     //    input = value.Get<Vector2>();
@@ -46,7 +80,7 @@ public class PlayerController : MonoBehaviour
     //    {
     //        if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
     //        {
-               
+
     //                if(input.x > 0)
     //                ChangeSprites(spriteRight);
     //                else
@@ -57,7 +91,7 @@ public class PlayerController : MonoBehaviour
     //                if (input.y > 0)
     //                    ChangeSprites(spriteUp);
     //                else ChangeSprites(spriteDown);
-                
+
     //        } 
     //    }
 
@@ -86,6 +120,22 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    // ⭐ 현재 실시간 플레이어 정보를 GameManager의 세이브 데이터용 객체로 복사하는 함수
+    public void SyncStatsToManager()
+    {
+        if (GameManager.Instance == null) return;
+
+        GameManager.Instance.currentData.playerPosition = transform.position;
+        GameManager.Instance.currentData.playerHP = currentHealth;
+        GameManager.Instance.currentData.playerMaxHP = maxHealth;
+        GameManager.Instance.currentData.playerGold = gold;
+        GameManager.Instance.currentData.playerGoldMax = goldMax;
+        GameManager.Instance.currentData.playerAttackPower = attackPower;
+        GameManager.Instance.currentData.playerDefensePower = defensePower;
+    }
+
+
     //private void ChangeSprites(Sprite[] newSprites)
     //{
     //    if (currentSprites == newSprites)
