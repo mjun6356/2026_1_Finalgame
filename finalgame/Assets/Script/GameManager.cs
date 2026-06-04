@@ -33,13 +33,16 @@ public class GameManager : MonoBehaviour
 {
     // 어디서나 접근 가능한 싱글톤 인스턴스
     public static GameManager Instance { get; private set; }
-
-    [Header("현재 게임 데이터")]
-    // ⭐ 위에 정의한 GameData 클래스를 실시간으로 들고 있는 변수입니다.
+// ⭐ 위에 정의한 GameData 클래스를 실시간으로 들고 있는 변수입니다.
     public GameData currentData = new GameData();
 
+    [Header("현재 게임 데이터")]
+    
+    
+
     [HideInInspector]
-    public string currentBattleEnemyID; // 현재 전투 중인 적의 ID 백업용
+    public string currentBattleSymbolID; // 필드에서 지워야 할 몹의 주민등록번호
+    public int currentBattleEnemyID; // 현재 전투 중인 적의 ID 백업용
 
     private string saveFilePath; // 세이브 파일이 저장될 경로
 
@@ -98,20 +101,22 @@ public class GameManager : MonoBehaviour
     }
 
     // --- ⚔️ 전투 진입 및 복귀 ---
-    public void EnterBattle(string enemyID)
+    public void EnterBattle(string symbolID,int enemyID)
     {
+        currentBattleSymbolID = symbolID; // "어떤 녀석을 잡았는지 기억"
         currentBattleEnemyID = enemyID;
+
         SceneManager.LoadScene("BattleScene"); // 인카운터 시 전투 씬으로 전환
     }
 
     public void ReturnToField()
     {
         // 전투에서 승리해 필드로 돌아올 때, 방금 싸운 적을 처치 목록에 추가
-        if (!string.IsNullOrEmpty(currentBattleEnemyID))
+        if (!string.IsNullOrEmpty(currentBattleSymbolID))
         {
-            currentData.defeatedEnemyIDs.Add(currentBattleEnemyID);
+            currentData.defeatedEnemyIDs.Add(currentBattleSymbolID);
         }
 
-        SceneManager.LoadScene("FieldScene"); // 다시 필드 씬으로 복귀
+        SceneManager.LoadScene("Would"); // 다시 필드 씬으로 복귀
     }
 }
