@@ -9,12 +9,12 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 10f;
 
     [Header("플레이어 스탯")]
-    public int maxHealth;
-    public int currentHealth;
-    public int attackPower;
-    public int defensePower;
-    public int gold;
-    public int goldMax;
+    public int maxHealth=1000;
+    public int currentHealth=100;
+    public int attackPower=20;
+    public int defensePower=50;
+    public int gold=3000;
+    public int goldMax=99999;
 
     //[Header("이동 애니메이션 프레임")]
 
