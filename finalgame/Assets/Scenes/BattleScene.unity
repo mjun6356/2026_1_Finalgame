@@ -418,12 +418,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 415817254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 976bf965f75d0284bb5e3363fb687ac7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a533b95b6948fa44bab92933e420f5a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BattleManger
+  m_EditorClassIdentifier: Assembly-CSharp::BattleManager
   currentState: 0
-  MainPanel: {fileID: 0}
-  attackTargetPanel: {fileID: 0}
+  enemyDatabase: []
+  attackBar: {fileID: 0}
+  enemyTurnBox: {fileID: 0}
+  menuButtonsParent: {fileID: 0}
+  battleLogText: {fileID: 0}
 --- !u!1 &496162410
 GameObject:
   m_ObjectHideFlags: 0
