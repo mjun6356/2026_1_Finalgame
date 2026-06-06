@@ -421,6 +421,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976bf965f75d0284bb5e3363fb687ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleManger
+  currentState: 0
+  MainPanel: {fileID: 0}
+  attackTargetPanel: {fileID: 0}
 --- !u!1 &496162410
 GameObject:
   m_ObjectHideFlags: 0
@@ -1785,10 +1788,10 @@ RectTransform:
   - {fileID: 1218309764}
   m_Father: {fileID: 1184862419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -276}
-  m_SizeDelta: {x: 1920, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2082560444
 MonoBehaviour:

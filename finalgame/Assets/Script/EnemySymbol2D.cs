@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class EnemySymbol2D : MonoBehaviour
 {
-    [Header("심볼 고유 ID (맵에서 삭제할 때 사용)")]
-    public string symbolID; // ⚠️ 인스펙터에서 적마다 다르게 적어주세요 (ex: Mob_01, Mob_02)
+    [Header("연결할 몬스터 데이터 에셋")]
+    public EnemyDataSO enemyData; // 👈 여기에 슬라임 데이터나 고블린 데이터 SO를 드래그앤드롭!
 
-    [Header("전투 데이터 ID (전투 씬에서 소환할 적 종류)")]
-    public int enemyID;     // ⚠️ 도감 번호 (ex: 1번은 슬라임, 2번은 고블린)
+    [Header("심볼 고유 ID (맵 복귀 시 삭제용 주민번호)")]
+    public string symbolID;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,13 +29,17 @@ public class EnemySymbol2D : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             PlayerController player = collision.GetComponent<PlayerController>();
-            if (player != null)
-            {
-                player.SyncStatsToManager(); // 현재 플레이어 스탯 백업
-            }
+            if (player != null) player.SyncStatsToManager();
 
-            //  두 가지 ID를 모두 매니저에게 던져줍니다!
-            GameManager.Instance.EnterBattle(symbolID, enemyID);
+            // SO가 가진 도감 번호를 매니저에게 전달하면서 전투 진입
+            if (enemyData != null)
+            {
+                GameManager.Instance.EnterBattle(symbolID, enemyData.enemyID);
+            }
+            else
+            {
+                Debug.LogError($"{gameObject.name}에 EnemyDataSO가 등록되지 않았습니다!");
+            }
         }
     }
 }
