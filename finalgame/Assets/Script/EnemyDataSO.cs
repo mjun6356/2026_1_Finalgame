@@ -6,6 +6,7 @@ public class EnemyDataSO : ScriptableObject
     [Header("기본 정보")]
     public int enemyID;         // 몬스터 도감 번호
     public string enemyName;    // 이름
+    public Sprite enemySprite;  // 몬스터 이미지
 
     [Header("전투 스탯")]
     public int maxHP;           // 최대 체력
