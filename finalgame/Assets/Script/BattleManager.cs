@@ -25,6 +25,7 @@ public class BattleManager : MonoBehaviour
     public GameObject enemyTurnBox;
     public GameObject menuButtonsParent;
     public Text battleLogText;
+    public Sprite enemyUI;
 
     private void Awake()
     {
@@ -57,10 +58,25 @@ public class BattleManager : MonoBehaviour
         switch (currentState)
         {
             case BattleState.PlayerMenu:
-                menuButtonsParent.SetActive(true);
                 enemyTurnBox.SetActive(false);
-                // SO에 적어둔 조우 대사 출력
-                battleLogText.text = activeEnemySO.encounterText;
+
+                // 1. 대사가 나오는 동안 하단 메뉴 버튼들을 잠시 숨깁니다.
+                menuButtonsParent.SetActive(false);
+
+                // 2. 내가 만든 다이얼로그 매니저를 호출해서 몬스터의 조우 다이얼로그를 재생합니다.
+                // (※ 아래 코드는 본인의 다이얼로그 실행 함수 이름으로 바꾸셔야 합니다!)
+                if (activeEnemySO.encounterDialogue != null)
+                {
+                    // 예시: DialogueManager.Instance.StartDialogue(activeEnemySO.encounterDialogue);
+
+                    // [팁] 대사가 끝난 후 메뉴 버튼을 다시 켜주기 위해 코루틴이나 이벤트를 활용해야 합니다.
+                    StartCoroutine(WaitForEncounterDialogueEnd());
+                }
+                else
+                {
+                    // 대사 SO가 비어있다면 바로 메뉴 보여주기
+                    menuButtonsParent.SetActive(true);
+                }
                 break;
 
             case BattleState.PlayerAction:
@@ -83,6 +99,19 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    // 3. 조우 대사가 끝날 때까지 기다렸다가 메뉴 버튼을 켜주는 헬퍼 코루틴 예시
+    private IEnumerator WaitForEncounterDialogueEnd()
+    {
+        // 예시: 본인의 다이얼로그 시스템이 "나 지금 대사 띄우는 중이야"라는 bool 변수(isShowing)를 가지고 있다면 활용
+        // while (DialogueManager.Instance.isShowing) { yield return null; }
+
+        // 임시로 2초 뒤에 끝난다고 가정 (실제 다이얼로그 종료 시점과 연결해야 합니다)
+        yield return new WaitForSeconds(2.5f);
+
+        // 대사가 끝났으니 플레이어가 선택할 수 있게 메뉴 버튼 활성화!
+        menuButtonsParent.SetActive(true);
+    }
+
     // ==========================================
     // 🔘 4대 버튼 UI 이벤트
     // ==========================================
@@ -90,10 +119,22 @@ public class BattleManager : MonoBehaviour
     // 1. FIGHT (공격)
     public void OnFightButtonClicked()
     {
-        if (currentState != BattleState.PlayerMenu) return;
-        ChangeState(BattleState.PlayerAction);
-        battleLogText.text = "";
-        attackBar.StartAttack();
+        // 1. battleLogText가 연결되어 있을 때만 텍스트를 비웁니다 (다이얼로그 전환 시 에러 방지)
+        if (battleLogText != null)
+        {
+            battleLogText.text = "";
+        }
+
+        // 2. 어택바가 제대로 연결되어 있는지 검사합니다.
+        if (attackBar != null)
+        {
+            attackBar.StartAttack(); // 정상 실행
+        }
+        else
+        {
+            // 연결이 안 되었다면 콘솔창에 빨간색으로 경고를 띄웁니다.
+            Debug.LogError("🚨 [오류] BattleManager 인스펙터 창에 'Attack Bar' 오브젝트가 연결되지 않았습니다! 드래그해서 넣어주세요.");
+        }
     }
 
     public void ProcessPlayerAttack(float damageMultiplier)
@@ -119,12 +160,15 @@ public class BattleManager : MonoBehaviour
         if (currentState != BattleState.PlayerMenu) return;
         ChangeState(BattleState.PlayerAction);
 
-        // SO에 지정된 행동 관찰 대사 출력
-        battleLogText.text = activeEnemySO.actActionText;
+        // 행동 대사 다이얼로그 SO 실행
+        if (activeEnemySO.actActionDialogue != null)
+        {
+            // DialogueManager.Instance.StartDialogue(activeEnemySO.actActionDialogue);
+        }
 
-        // 행동을 했으므로 자비가 가능하게 만듦
         isSpareable = true;
 
+        // 행동 대사가 끝난 뒤(예: 2.5초 후) 적의 턴으로 넘어가도록 처리
         StartCoroutine(WaitAndSwitchTurn(2.5f, BattleState.EnemyTurn));
     }
 

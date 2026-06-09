@@ -13,6 +13,6 @@ public class EnemyDataSO : ScriptableObject
     public int attackPower;     // 공격력
 
     [Header("언더테일 풍 텍스트 설정")]
-    [TextArea] public string encounterText; // 전투 시작 시 뜰 대사
-    [TextArea] public string actActionText; // ACT(행동) 버튼 눌렀을 때 대사
+    public DialiogueDataSO encounterDialogue; // 전투 진입 대사
+    public DialiogueDataSO actActionDialogue; // ACT(행동) 대사
 }
