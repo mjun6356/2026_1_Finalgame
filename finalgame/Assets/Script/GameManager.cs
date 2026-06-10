@@ -4,26 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 
 
-// ==========================================
-// 1. 저장할 데이터 구조 정의 (데이터 바구니)
-// ==========================================
-// ⚠️ 주의: 이 클래스는 MonoBehaviour를 상속받지 않습니다! (뒤에 : MonoBehaviour가 없음)
-[System.Serializable]
-public class GameData
-{
-    // 플레이어 데이터
-    public Vector2 playerPosition;
-    public int playerHP;
-    public int playerMaxHP;
-    public int playerGold;
-    public int playerGoldMax;
-    public int playerAttackPower;
-    public int playerDefensePower;
 
-    // 로그라이크 진행 데이터
-    public int currentFloor;
-    public List<string> defeatedEnemyIDs = new List<string>(); // 처치된 적들의 ID 목록
-}
 
 
 // ==========================================
@@ -66,8 +47,9 @@ public class GameManager : MonoBehaviour
     // --- 💾 세이브 로직 ---
     public void SaveGame()
     {
-        // 저장하기 직전에 필드에 플레이어가 있다면 최신 정보를 currentData에 동기화
-        PlayerController player = FindObjectOfType<PlayerController>();
+        // 🎯 유니티 6에서는 FindObjectOfType 대신 'FindFirstObjectByType'을 씁니다!
+        PlayerController player = FindFirstObjectByType<PlayerController>();
+
         if (player != null)
         {
             player.SyncStatsToManager();
