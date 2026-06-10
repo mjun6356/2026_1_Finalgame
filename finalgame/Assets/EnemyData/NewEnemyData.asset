@@ -17,5 +17,5 @@ MonoBehaviour:
   enemySprite: {fileID: 2703645949092684895, guid: 3b85284f7d3d4d741acccb2483bd1735, type: 3}
   maxHP: 100
   attackPower: 50
-  encounterText: "\uD0A4\uC5D0\uC5D0\uC5D1"
-  actActionText: "\uBB50?\uC139\uC2A4?"
+  encounterDialogue: {fileID: 11400000, guid: 06b31624e5ad21d4d80f107a953618d5, type: 2}
+  actActionDialogue: {fileID: 11400000, guid: a040358081e63024e930a633e83eaccd, type: 2}

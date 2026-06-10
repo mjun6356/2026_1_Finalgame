@@ -49,26 +49,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-       if (GameManager.Instance != null)
-       {
-
-
-           // 기존 플레이어 정보를 사용
-           maxHealth = GameManager.Instance.currentData.playerMaxHP;
-           currentHealth = GameManager.Instance.currentData.playerHP;
-           attackPower = GameManager.Instance.currentData.playerAttackPower;
-           defensePower = GameManager.Instance.currentData.playerDefensePower;
-       }
-       else
-       {
-
-
-           // 기본값 설정
-           maxHealth = 100;
-           currentHealth = maxHealth;
-           attackPower = 10;
-           defensePower = 5;
-       }
+       
 
     }
 
@@ -122,18 +103,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // ⭐ 현재 실시간 플레이어 정보를 GameManager의 세이브 데이터용 객체로 복사하는 함수
-    public void SyncStatsToManager()
-    {
-        if (GameManager.Instance == null) return;
-
-        GameManager.Instance.currentData.playerPosition = transform.position;
-        GameManager.Instance.currentData.playerHP = currentHealth;
-        GameManager.Instance.currentData.playerMaxHP = maxHealth;
-        GameManager.Instance.currentData.playerGold = gold;
-        GameManager.Instance.currentData.playerGoldMax = goldMax;
-        GameManager.Instance.currentData.playerAttackPower = attackPower;
-        GameManager.Instance.currentData.playerDefensePower = defensePower;
-    }
+  
 
 
     //private void ChangeSprites(Sprite[] newSprites)

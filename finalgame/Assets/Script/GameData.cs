@@ -3,10 +3,7 @@ using UnityEngine;
 
 
 
-    // ==========================================
-    // 1. 저장할 데이터 구조 정의 (데이터 바구니)
-    // ==========================================
-    // ⚠️ 주의: 이 클래스는 MonoBehaviour를 상속받지 않습니다! (뒤에 : MonoBehaviour가 없음)
+   
     [System.Serializable]
     public class GameData
     {
@@ -23,6 +20,6 @@ using UnityEngine;
         public int currentFloor;
         public List<string> defeatedEnemyIDs = new List<string>(); // 처치된 적들의 ID 목록
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
    
 
