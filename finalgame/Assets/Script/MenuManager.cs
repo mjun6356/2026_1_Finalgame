@@ -31,4 +31,10 @@ public class MenuManager : MonoBehaviour
         // 도움말 창을 다시 안 보이게 끕니다.
         helpPanel.SetActive(false);
     }
+
+    public  void EixtButton()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
+    }
+
 }
