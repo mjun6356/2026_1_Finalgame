@@ -4,13 +4,13 @@ using UnityEngine;
 public class EnemyDataSO : ScriptableObject
 {
     [Header("기본 정보")]
-    public int enemyID;         // 몬스터 도감 번호
+   
     public string enemyName;    // 이름
     public Sprite enemySprite;  // 몬스터 이미지
 
     [Header("전투 스탯")]
-    public int maxHP;           // 최대 체력
-    public int attackPower;     // 공격력
+    public int EnemyMaxHP;           // 최대 체력
+    public int EnemyAttackPower;     // 공격력
 
     [Header("언더테일 풍 텍스트 설정")]
     public DialiogueDataSO encounterDialogue; // 전투 진입 대사
