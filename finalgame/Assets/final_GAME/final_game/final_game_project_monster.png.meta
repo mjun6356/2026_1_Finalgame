@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 122be239dc8f53142b243169d176a3fd
+guid: f928763e5a98e4744a4b2018031d3a79
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6409610731918272258
-    second: final_game_project_monster3_0
+      213: -7711071121161930611
+    second: final_game_project_monster_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: final_game_project_monster3_0
+      name: final_game_project_monster_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 288
-        height: 339
+        width: 257
+        height: 351
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ef8da77bffc7c07a0800000000000000
-      internalID: -6409610731918272258
+      spriteID: d88be599ba5ccf490800000000000000
+      internalID: -7711071121161930611
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      final_game_project_monster3_0: -6409610731918272258
+      final_game_project_monster_0: -7711071121161930611
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
