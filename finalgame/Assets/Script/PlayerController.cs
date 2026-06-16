@@ -16,13 +16,12 @@ public class PlayerController : MonoBehaviour
     public int gold=3000;
     public int goldMax=99999;
 
-    //[Header("이동 애니메이션 프레임")]
-
-    //public Sprite[] spriteUp;
-    //public Sprite[] spriteDown;
-    //public Sprite[] spriteLeft;
-    //public Sprite[] spriteRight;
-    //public float frameTime = 0.15f;
+    [Header("이동 애니메이션 프레임")]
+    public Sprite[] spriteUp;
+    public Sprite[] spriteDown;
+    public Sprite[] spriteLeft;
+    public Sprite[] spriteRight;
+    public float frameTime = 0.15f;
 
 
     private SpriteRenderer sr;
@@ -30,9 +29,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 movement;
     private Vector2 input;
     
-    //private Sprite[] currentSprites;
-    //private int frameIndex = 0;
-    //private float timer = 0f;
+    private Sprite[] currentSprites;
+    private int frameIndex = 0;
+    private float timer = 0f;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,8 +41,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
 
-        //currentSprites = spriteDown;
-        //sr.sprite = currentSprites[0];
+        currentSprites = spriteDown;
+        sr.sprite = currentSprites[0];
        
     }
 
@@ -53,30 +52,30 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //public void OnMove(InputValue value)
-    //{
-    //    input = value.Get<Vector2>();
+    public void OnMove(InputValue value)
+    {
+        input = value.Get<Vector2>();
 
-    //    if (input.sqrMagnitude > 0.01f)
-    //    {
-    //        if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
-    //        {
+       if (input.sqrMagnitude > 0.01f)
+        {
+            if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
+            {
 
-    //                if(input.x > 0)
-    //                ChangeSprites(spriteRight);
-    //                else
-    //                    ChangeSprites(spriteLeft);
-    //        }  
-    //        else    
-    //        {      
-    //                if (input.y > 0)
-    //                    ChangeSprites(spriteUp);
-    //                else ChangeSprites(spriteDown);
+                    if(input.x > 0)
+                    ChangeSprites(spriteRight);
+                    else
+                        ChangeSprites(spriteLeft);
+            }  
+            else    
+            {      
+                    if (input.y > 0)
+                        ChangeSprites(spriteUp);
+                    else ChangeSprites(spriteDown);
 
-    //        } 
-    //    }
+            } 
+        }
 
-    //}
+    }
 
     // Update is called once per frame
     void Update()
@@ -84,6 +83,8 @@ public class PlayerController : MonoBehaviour
         //이게 이동 함수
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+
+
     }
     void FixedUpdate()
     {
@@ -106,13 +107,13 @@ public class PlayerController : MonoBehaviour
   
 
 
-    //private void ChangeSprites(Sprite[] newSprites)
-    //{
-    //    if (currentSprites == newSprites)
-    //        return;
-    //    currentSprites = newSprites;
-    //    frameIndex = 0;
-    //    timer = 0f;
-    //    sr.sprite = currentSprites[frameIndex];
-    //}
+    private void ChangeSprites(Sprite[] newSprites)
+    {
+        if (currentSprites == newSprites)
+            return;
+        currentSprites = newSprites;
+        frameIndex = 0;
+        timer = 0f;
+        sr.sprite = currentSprites[frameIndex];
+    }
 }
