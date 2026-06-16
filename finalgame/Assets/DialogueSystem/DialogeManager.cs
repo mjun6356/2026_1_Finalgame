@@ -20,6 +20,7 @@ public class DialogeManager : MonoBehaviour
     [Header("타이핑 효과 설정")]
     public float typingSpeed = 0.05f; // 타이핑 효과 속도 (초 단위)
     public bool skipTyoingOnClick = true; // 대화 텍스트를 클릭하면 타이핑 효과를 건너뛸지 여부
+    public AudioSource audioSource;
 
     //내부 변수
     private DialiogueDataSO currentDialogue; // 현재 대화 데이터

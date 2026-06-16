@@ -14,7 +14,14 @@ public class DialiogueDataSO : ScriptableObject
     [TextArea(3,10)]
     public List<string> dialogueLines = new List<string>(); // 대화 내용이 담긴 리스트
 
-    public AudioClip typingSound;
+    public Choice[] choice;
+
+    [System.Serializable]
+    public struct Choice
+    {
+        public string choiceText;
+        public DialiogueDataSO nextDialogue;
+    }
 
 
 
