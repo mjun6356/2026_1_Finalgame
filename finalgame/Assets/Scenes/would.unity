@@ -13394,6 +13394,7 @@ MonoBehaviour:
   defaultCharacterImage: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   typingSpeed: 0.05
   skipTyoingOnClick: 1
+  audioSource: {fileID: 0}
 --- !u!1 &680415706
 GameObject:
   m_ObjectHideFlags: 0
