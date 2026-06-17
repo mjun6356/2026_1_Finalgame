@@ -7,6 +7,8 @@ public class DialogueNPC : MonoBehaviour
     // 플레이어가 범위 안에 있는지 체크하는 변수
     private bool isPlayerInRange = false;
 
+   
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,6 +19,8 @@ public class DialogueNPC : MonoBehaviour
         {
             Debug.Log("다이얼 로그 매니저가 없습니다.");
         }
+
+        dialogeManager.StartDialogue(myDialogue);
     }
 
     //private void OnMouseDown()
