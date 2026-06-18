@@ -20,7 +20,7 @@ public class DialogueNPC : MonoBehaviour
             Debug.Log("다이얼 로그 매니저가 없습니다.");
         }
 
-        dialogeManager.StartDialogue(myDialogue);
+        
     }
 
     //private void OnMouseDown()

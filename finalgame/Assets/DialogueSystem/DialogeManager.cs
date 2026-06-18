@@ -102,6 +102,7 @@ public class DialogeManager : MonoBehaviour
         isTyping = false;
         DialoguePanel.SetActive(false);
         currentLineIndex = 0;
+        
 
     }
 
@@ -134,6 +135,8 @@ public class DialogeManager : MonoBehaviour
         currentDialogue = dialogue;
         currentLineIndex = 0;
         isDialogueActive = true;
+
+        
 
         // UI 요소 업데이트
         DialoguePanel.SetActive(true); // 대화 패널 활성화
