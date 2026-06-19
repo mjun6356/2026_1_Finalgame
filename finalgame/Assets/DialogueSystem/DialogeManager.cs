@@ -103,7 +103,7 @@ public class DialogeManager : MonoBehaviour
         DialoguePanel.SetActive(false);
         currentLineIndex = 0;
         
-
+        Time.timeScale = 1f; // 게임 시간 재개
     }
 
     public void HandleNextInput()
@@ -155,6 +155,9 @@ public class DialogeManager : MonoBehaviour
         }
 
         ShowCurrentLine(); // 첫 번째 대화 줄 표시
+
+        Time.timeScale = 0f; // 게임 일시정지
+
     }
 
     void Start()

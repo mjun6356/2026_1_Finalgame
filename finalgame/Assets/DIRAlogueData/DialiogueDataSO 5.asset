@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 053dc3a8d5fc1d2469c1218618875a29, type: 3}
-  m_Name: DialiogueDataSO 4
+  m_Name: DialiogueDataSO 5
   m_EditorClassIdentifier: Assembly-CSharp::DialiogueDataSO
   characterName: "\uCCA0\uC218"
-  characterImage: {fileID: -3848671675706844320, guid: 18f8b7e321b8d8f42aa82a5669e226bf, type: 3}
+  characterImage: {fileID: -566620303165444469, guid: 20ad0064be8c62643ac9afa2412465b0, type: 3}
   dialogueLines:
-  - "\uC5EC\uAE30\uB85C\uAC00\uBA74 \uCC28\uC5D0 \uCE58\uC77C \uAC83 \uAC19\uB2E4.
-    \n\uC58C\uC804\uD788 \uBB34\uB2E8\uD6A1\uB2E8\uD558\uB7EC\n\uD6A1\uB2E8\uBCF4\uB3C4\uB85C
-    \uAC00\uC790"
+  - "\uC2EB\uC5B4, \uB610 \uD68C\uC0AC\uAC00\uAE30 \uC2EB\uC5B4!"
   choice: []

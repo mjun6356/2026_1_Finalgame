@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class DialogueFrist : MonoBehaviour
 {
@@ -20,18 +21,25 @@ public class DialogueFrist : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        
+
         if (other.CompareTag("Player"))
         {
             fristDialiogumanager.StartDialogue(fristDialogue);
         }
 
         
+        
+
 
         Destroy(gameObject);
 
         
 
     }
+
+
+
 
     // Update is called once per frame
     void Update()
