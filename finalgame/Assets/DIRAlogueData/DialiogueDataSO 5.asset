@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DialiogueDataSO 5
   m_EditorClassIdentifier: Assembly-CSharp::DialiogueDataSO
   characterName: "\uCCA0\uC218"
-  characterImage: {fileID: -566620303165444469, guid: 20ad0064be8c62643ac9afa2412465b0, type: 3}
+  characterImage: {fileID: -3848671675706844320, guid: 18f8b7e321b8d8f42aa82a5669e226bf, type: 3}
   dialogueLines:
   - "\uC2EB\uC5B4, \uB610 \uD68C\uC0AC\uAC00\uAE30 \uC2EB\uC5B4!"
   choice: []
