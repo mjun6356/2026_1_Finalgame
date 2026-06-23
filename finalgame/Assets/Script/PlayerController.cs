@@ -46,9 +46,27 @@ public class PlayerController : MonoBehaviour
        
     }
 
+    //  GameManager가 세이브할 때 플레이어의 최신 필드 위치를 가져가도록 싱크해주는 함수
+    public void SyncStatsToManager()
+    {
+        if (GameManager.Instance != null)
+        {
+            // 현재 플레이어 오브젝트의 실시간 좌표를 세이브 데이터 구조체에 저장
+            GameManager.Instance.currentData.playerPosition = this.transform.position;
+        }
+    }
+
+
     void Start()
     {
-       
+        if (GameManager.Instance != null)
+        {
+            // 저장된 좌표가 (0,0)이 아니라면 원래 서 있던 자리로 복귀시킵니다.
+            if (GameManager.Instance.currentData.playerPosition != Vector2.zero)
+            {
+                this.transform.position = GameManager.Instance.currentData.playerPosition;
+            }
+        }
 
     }
 
