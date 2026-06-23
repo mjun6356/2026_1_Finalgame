@@ -9,12 +9,10 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 10f;
 
     [Header("플레이어 스탯")]
-    public int playerMaxHP = 1000;
-    public int playerHP = 100;
-    public int playerAttackPower = 20;
-    public int playerDefensePower = 50;
-    public int playerGold = 3000;
-   
+    public int maxHp = 100;
+    public int currentHp;
+    public int defense = 3;
+
 
     [Header("이동 애니메이션 프레임")]
     public Sprite[] spriteUp;
@@ -47,35 +45,24 @@ public class PlayerController : MonoBehaviour
     }
 
     //  GameManager가 세이브할 때 플레이어의 최신 필드 위치를 가져가도록 싱크해주는 함수
-    public void SyncStatsToManager()
-    {
-        if (GameManager.Instance != null)
-        {
-            // 1. 내 위치 저장
-            GameManager.Instance.currentData.playerPosition = this.transform.position;
-
-            // 2.  PlayerController에 적힌 스탯들을 GameManager로 싹 다 넘겨줍니다!
-            // (변수명은 본인이 PlayerController에 선언해둔 이름과 똑같이 맞추세요)
-            GameManager.Instance.currentData.playerHP = this.playerHP;
-            GameManager.Instance.currentData.playerMaxHP = this.playerMaxHP;
-            GameManager.Instance.currentData.playerAttackPower = this.playerAttackPower;
-            GameManager.Instance.currentData.playerDefensePower = this.playerDefensePower;
-            GameManager.Instance.currentData.playerGold = this.playerGold;
-        }
-    }
+   
 
 
     void Start()
     {
-        if (GameManager.Instance != null)
-        {
-            // 저장된 좌표가 (0,0)이 아니라면 원래 서 있던 자리로 복귀시킵니다.
-            if (GameManager.Instance.currentData.playerPosition != Vector2.zero)
-            {
-                this.transform.position = GameManager.Instance.currentData.playerPosition;
-            }
-        }
+        currentHp = maxHp;
 
+    }
+    public void TakeDamage(int damage)
+    {
+        int finalDamage = Mathf.Max(1, damage - defense);
+
+        currentHp -= finalDamage;
+
+        if (currentHp <= 0)
+        {
+            GameManager.Instance.GameOver();
+        }
     }
 
     public void OnMove(InputValue value)
