@@ -9,8 +9,8 @@ public class EnemyDataSO : ScriptableObject
     public Sprite enemySprite;  // 몬스터 이미지
 
     [Header("전투 스탯")]
-    public int EnemyMaxHP;           // 최대 체력
-    public int EnemyAttackPower;     // 공격력
+    public int maxHP;           // 최대 체력
+    public int attackPower;     // 공격력
 
     public int playerPlusGold;   // 플레이어에게 줄 골드량
     

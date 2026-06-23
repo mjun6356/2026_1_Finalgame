@@ -9,12 +9,12 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 10f;
 
     [Header("플레이어 스탯")]
-    public int maxHealth=1000;
-    public int currentHealth=100;
-    public int attackPower=20;
-    public int defensePower=50;
-    public int gold=3000;
-    public int goldMax=99999;
+    public int playerMaxHP = 1000;
+    public int playerHP = 100;
+    public int playerAttackPower = 20;
+    public int playerDefensePower = 50;
+    public int playerGold = 3000;
+   
 
     [Header("이동 애니메이션 프레임")]
     public Sprite[] spriteUp;
@@ -51,8 +51,16 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            // 현재 플레이어 오브젝트의 실시간 좌표를 세이브 데이터 구조체에 저장
+            // 1. 내 위치 저장
             GameManager.Instance.currentData.playerPosition = this.transform.position;
+
+            // 2.  PlayerController에 적힌 스탯들을 GameManager로 싹 다 넘겨줍니다!
+            // (변수명은 본인이 PlayerController에 선언해둔 이름과 똑같이 맞추세요)
+            GameManager.Instance.currentData.playerHP = this.playerHP;
+            GameManager.Instance.currentData.playerMaxHP = this.playerMaxHP;
+            GameManager.Instance.currentData.playerAttackPower = this.playerAttackPower;
+            GameManager.Instance.currentData.playerDefensePower = this.playerDefensePower;
+            GameManager.Instance.currentData.playerGold = this.playerGold;
         }
     }
 

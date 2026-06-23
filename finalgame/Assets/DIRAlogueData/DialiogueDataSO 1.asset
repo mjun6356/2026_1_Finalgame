@@ -15,5 +15,6 @@ MonoBehaviour:
   characterName: "\uACE0\uBE14\uB9B0"
   characterImage: {fileID: 2703645949092684895, guid: 00626993914a7cc429878009a478cba6, type: 3}
   dialogueLines:
-  - "\uD0A4\uC5D0\uC5D0\uC5D0\uC5D1\n\uD0A4\uC5D0\uC5D1\n\uD0A4\uC5D0\uC5D1....\u2764\uFE0F"
-  - "\uD0A4\uC5D0\uC5D0\uC5D0\uC5D1\n\uD0A4\uC5D0\uC5D1\n\uD0A4\uC5D0\uC5D1....\u2764\uFE0F"
+  - "\uD0A4\uC5D0\uC5D0\uC5D0\uC5D1\n\uD0A4\uC5D0\uC5D1\n\uD0A4\uC5D0\uC5D1...."
+  - "\uD0A4\uC5D0\uC5D0\uC5D0\uC5D1\n\uD0A4\uC5D0\uC5D1\n\uD0A4\uC5D0\uC5D1...."
+  choice: []

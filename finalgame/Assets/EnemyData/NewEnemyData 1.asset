@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDataSO
   enemyName: IsakaiBus
   enemySprite: {fileID: 0}
-  EnemyMaxHP: 100
-  EnemyAttackPower: 100
+  maxHP: 0
+  attackPower: 0
   playerPlusGold: 666
   encounterDialogue: {fileID: 0}
   actActionDialogue: {fileID: 0}

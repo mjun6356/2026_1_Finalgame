@@ -99,26 +99,25 @@ public class BattleManager : MonoBehaviour
     [Header(" 상태 관리")]
     public BattleState currentState;
 
-    //  굳이 List<EnemyDataSO> 데이터베이스를 들고 다니며 탐색할 필요가 없어졌습니다!
     private EnemyDataSO activeEnemySO;
     private int currentEnemyHP;
     private bool isSpareable;
 
-    [Header(" 플레이어 HP UI 연결")]
-    public Slider playerHPBar;
-    public Text playerHPText;
+    [Header(" 플레이어 UI (TextMeshPro)")]
+    public TextMeshProUGUI playerHPText;
+
+    [Header("전투 상황판 텍스트 (추가됨!)")]
+    public TextMeshProUGUI battleLogText; //  여기에 "전투 시작!", "적에게 10 데미지!" 글씨가 뜹니다.
 
     [Header(" 키보드 메뉴 네비게이션")]
-    public GameObject[] menuButtons; // 0: FIGHT, 1: ACT, 2: ITEM, 3: MERCY
-    public RectTransform soulUI;     // 선택창을 기어다닐 빨간 하트 이미지
-    public Vector3 soulOffset = new Vector3(-45f, 0f, 0f); // 버튼 좌측 오프셋
+    public GameObject[] menuButtons;
+    public RectTransform soulUI;
+    public Vector3 soulOffset = new Vector3(-45f, 0f, 0f);
     private int selectedButtonIndex = 0;
 
     [Header(" UI 오브젝트 연결")]
-    public GameObject enemyTurnBox;      // 탄막 피하는 하얀 상자
-    public GameObject menuButtonsParent; // 하단 버튼 4개 부모
-    public AttackBar attackBar;
-    public Image enemyImageUI;           //  화면 중앙 고정 적 이미지
+    public GameObject menuButtonsParent;
+    public Image enemyImageUI;
 
     private void Awake()
     {
@@ -127,35 +126,39 @@ public class BattleManager : MonoBehaviour
 
     private void Start()
     {
-        // 1.  GameManager가 다이렉트로 넘겨준 스크립터블 오브젝트를 날로 먹기(?)
+        if (GameManager.Instance != null)
+        {
+            Debug.Log($"[로그] GameManager에 저장된 SO 이름: {(GameManager.Instance.currentBattleEnemySO != null ? GameManager.Instance.currentBattleEnemySO.name : "❌ 없음(Null)")}");
+        }
+        if (enemyImageUI == null)
+        {
+            Debug.LogError("❌ [에러] BattleManager 인스펙터 창에 'Enemy Image UI' 칸이 비어있습니다!");
+        }
+
         if (GameManager.Instance != null && GameManager.Instance.currentBattleEnemySO != null)
         {
             activeEnemySO = GameManager.Instance.currentBattleEnemySO;
         }
 
-        // 2. 몬스터 스탯 및 중앙 이미지 설정
         if (activeEnemySO != null)
         {
-            currentEnemyHP = activeEnemySO.EnemyMaxHP;
+            currentEnemyHP = activeEnemySO.maxHP;
             if (enemyImageUI != null && activeEnemySO.enemySprite != null)
             {
-                enemyImageUI.gameObject.SetActive(true); // 턴이 바뀌어도 꺼지지 않고 중앙 상단 고정
-                enemyImageUI.sprite = activeEnemySO.enemySprite;
+                enemyImageUI.gameObject.SetActive(true);
+                enemyImageUI.sprite = activeEnemySO.enemySprite; //  이미지 띄우는 로직
             }
+            UpdateLog($"{activeEnemySO.enemyName}이(가) 나타났다!");
         }
 
         isSpareable = false;
 
-        // 3. 선언하신 스탯 데이터에 맞춰 UI 초기 동기화
         UpdatePlayerHPUI();
-
-        // 4. 전투 시작
         ChangeState(BattleState.PlayerMenu);
     }
 
     private void Update()
     {
-        // 키보드 네비게이션 조작
         if (currentState == BattleState.PlayerMenu)
         {
             HandleMenuNavigation();
@@ -203,44 +206,28 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // ==========================================
-    //  버튼 액션 및 데이터 실시간 연동
-    // ==========================================
     private void OnFightSelected()
     {
         ChangeState(BattleState.PlayerAction);
         menuButtonsParent.SetActive(false);
-        soulUI.gameObject.SetActive(false);
+        if (soulUI != null) soulUI.gameObject.SetActive(false);
 
-        if (attackBar != null)
-        {
-            attackBar.gameObject.SetActive(true);
-            attackBar.StartAttack();
-        }
-    }
-
-    // 미니게임 완료 시 어택바에서 데미지 배율을 받아와 실행할 함수
-    public void ProcessPlayerAttack(float damageMultiplier)
-    {
         if (GameManager.Instance == null || activeEnemySO == null) return;
 
-        //  내 변수 연동: playerAttackPower 반영
-        int pAtk = GameManager.Instance.currentData.playerAttackPower;
-        int finalDamage = Mathf.RoundToInt(pAtk * damageMultiplier);
-
+        int finalDamage = GameManager.Instance.currentData.playerAttackPower;
         currentEnemyHP -= finalDamage;
-        Debug.Log($"{activeEnemySO.enemyName}에게 {finalDamage} 피해! 남은 체력: {currentEnemyHP}");
+
+        UpdateLog($"{activeEnemySO.enemyName}에게 {finalDamage}의 피해를 입혔다!"); // 🎯 피드백
 
         if (currentEnemyHP <= 0)
         {
             currentEnemyHP = 0;
-            StartCoroutine(EndBattleCo(isVictory: true)); // 승리 씬 복귀
+            StartCoroutine(EndBattleCo(true, "적을 쓰러뜨렸다!"));
         }
         else
         {
-            // 체력이 30% 이하로 떨어지면 노란색 자비(Spare) 가능 상태로 유도
-            if (currentEnemyHP <= activeEnemySO.EnemyMaxHP * 0.3f) isSpareable = true;
-            StartCoroutine(WaitAndSwitchTurn(2f, BattleState.EnemyTurn));
+            if (currentEnemyHP <= activeEnemySO.maxHP * 0.3f) isSpareable = true;
+            StartCoroutine(WaitAndSwitchTurn(1.5f, BattleState.EnemyTurn));
         }
     }
 
@@ -248,22 +235,17 @@ public class BattleManager : MonoBehaviour
     {
         ChangeState(BattleState.PlayerAction);
         menuButtonsParent.SetActive(false);
-        soulUI.gameObject.SetActive(false);
+        if (soulUI != null) soulUI.gameObject.SetActive(false);
 
-        if (activeEnemySO != null && activeEnemySO.actActionDialogue != null)
-        {
-            // DialogueManager.Instance.StartDialogue(activeEnemySO.actActionDialogue);
-        }
-
+        UpdateLog($"{activeEnemySO.enemyName}의 동태를 살핀다..."); //  피드백
         isSpareable = true;
-        StartCoroutine(WaitAndSwitchTurn(2.5f, BattleState.EnemyTurn));
+        StartCoroutine(WaitAndSwitchTurn(1.5f, BattleState.EnemyTurn));
     }
 
     private void OnItemSelected()
     {
         if (GameManager.Instance == null) return;
 
-        //  내 변수 연동: playerGold 검사 및 소모 후 playerHP 회복
         if (GameManager.Instance.currentData.playerGold >= 10)
         {
             ChangeState(BattleState.PlayerAction);
@@ -271,13 +253,15 @@ public class BattleManager : MonoBehaviour
             GameManager.Instance.currentData.playerHP += 15;
 
             if (GameManager.Instance.currentData.playerHP > GameManager.Instance.currentData.playerMaxHP)
-            {
                 GameManager.Instance.currentData.playerHP = GameManager.Instance.currentData.playerMaxHP;
-            }
 
             UpdatePlayerHPUI();
-            Debug.Log("아이템 사용 완료! HP 15 회복.");
-            StartCoroutine(WaitAndSwitchTurn(2f, BattleState.EnemyTurn));
+            UpdateLog("포션을 마셨다! 체력을 15 회복했다."); //  피드백
+            StartCoroutine(WaitAndSwitchTurn(1.5f, BattleState.EnemyTurn));
+        }
+        else
+        {
+            UpdateLog("돈이 부족해서 아이템을 쓸 수 없다...");
         }
     }
 
@@ -285,22 +269,19 @@ public class BattleManager : MonoBehaviour
     {
         ChangeState(BattleState.PlayerAction);
         menuButtonsParent.SetActive(false);
-        soulUI.gameObject.SetActive(false);
+        if (soulUI != null) soulUI.gameObject.SetActive(false);
 
         if (isSpareable)
         {
-            StartCoroutine(EndBattleCo(isVictory: false)); // 살려주고 전투 종료
+            StartCoroutine(EndBattleCo(false, "자비를 베풀었다. 전투 종료!"));
         }
         else
         {
-            Debug.Log("자비 실패!");
-            StartCoroutine(WaitAndSwitchTurn(2f, BattleState.EnemyTurn));
+            UpdateLog("아직 자비를 베풀 수 없다!");
+            StartCoroutine(WaitAndSwitchTurn(1.5f, BattleState.EnemyTurn));
         }
     }
 
-    // ==========================================
-    //  상태 제어 및 필드 복귀 (자폭 메커니즘 연동)
-    // ==========================================
     public void ChangeState(BattleState newState)
     {
         currentState = newState;
@@ -308,49 +289,53 @@ public class BattleManager : MonoBehaviour
         switch (currentState)
         {
             case BattleState.PlayerMenu:
-                enemyTurnBox.SetActive(false);
                 menuButtonsParent.SetActive(true);
                 UpdateSoulPosition();
+                UpdateLog("당신의 턴. 무엇을 할까?");
                 break;
 
             case BattleState.EnemyTurn:
                 menuButtonsParent.SetActive(false);
-                soulUI.gameObject.SetActive(false);
-                if (enemyTurnBox != null) enemyTurnBox.SetActive(true);
+                if (soulUI != null) soulUI.gameObject.SetActive(false);
+                StartCoroutine(EnemyAttackRoutine());
                 break;
         }
     }
 
-    private IEnumerator EndBattleCo(bool isVictory)
+    private IEnumerator EnemyAttackRoutine()
     {
-        if (isVictory)
+        UpdateLog("적의 공격이 날아온다!");
+        yield return new WaitForSeconds(1f);
+
+        TakeDamage();
+
+        if (currentState != BattleState.Lost)
         {
-            currentState = BattleState.Won;
-            // 승리 보상 골드 지급 (playerGold 연동)
-            if (GameManager.Instance != null) GameManager.Instance.currentData.playerGold += 15;
+            yield return new WaitForSeconds(1.5f);
+            ChangeState(BattleState.PlayerMenu);
         }
-
-        yield return new WaitForSeconds(1.5f);
-
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.SaveGame(); // 몬스터 정보를 포함해 안전하게 세이브
-        }
-
-        SceneManager.LoadScene("FieldScene"); // 본인의 실제 월드 맵 씬 이름 입력
     }
 
-    // ==========================================
-    //  실시간 HP 피격 계산 및 실시간 UI 드로우
-    // ==========================================
+    private IEnumerator EndBattleCo(bool isVictory, string endMessage)
+    {
+        currentState = BattleState.Won;
+        UpdateLog(endMessage); //  승리/자비 피드백
+
+        if (isVictory && GameManager.Instance != null)
+            GameManager.Instance.currentData.playerGold += 15;
+
+        yield return new WaitForSeconds(2f);
+
+        if (GameManager.Instance != null) GameManager.Instance.SaveGame();
+        SceneManager.LoadScene("FieldScene");
+    }
+
     public void TakeDamage()
     {
         if (GameManager.Instance == null || activeEnemySO == null) return;
 
-        //  내 변수 연동: 적 공격력 - 내 방어력(playerDefensePower) 공식 계산
-        int enemyAtk = activeEnemySO.EnemyAttackPower;
+        int enemyAtk = activeEnemySO.attackPower;
         int pDef = GameManager.Instance.currentData.playerDefensePower;
-
         int finalDamage = enemyAtk - pDef;
         if (finalDamage < 1) finalDamage = 1;
 
@@ -358,32 +343,26 @@ public class BattleManager : MonoBehaviour
         if (GameManager.Instance.currentData.playerHP < 0) GameManager.Instance.currentData.playerHP = 0;
 
         UpdatePlayerHPUI();
+        UpdateLog($"{finalDamage}의 데미지를 받았다!"); // 🎯 피드백
 
         if (GameManager.Instance.currentData.playerHP <= 0)
         {
             currentState = BattleState.Lost;
-            Debug.Log("게임 오버");
+            UpdateLog("체력이 0이 되었다... 게임 오버!");
         }
     }
 
     public void UpdatePlayerHPUI()
     {
         if (GameManager.Instance == null) return;
-
-        //  내 변수 명 완벽 매칭 연동 완료
-        int currentHP = GameManager.Instance.currentData.playerHP;
-        int maxHP = GameManager.Instance.currentData.playerMaxHP;
-
-        if (playerHPBar != null)
-        {
-            playerHPBar.maxValue = maxHP;
-            playerHPBar.value = currentHP;
-        }
-
         if (playerHPText != null)
-        {
-            playerHPText.text = $"{currentHP} / {maxHP}";
-        }
+            playerHPText.text = $"{GameManager.Instance.currentData.playerHP} / {GameManager.Instance.currentData.playerMaxHP}";
+    }
+
+    //  텍스트 UI를 바꿔주는 헬퍼 함수
+    private void UpdateLog(string message)
+    {
+        if (battleLogText != null) battleLogText.text = message;
     }
 
     private IEnumerator WaitAndSwitchTurn(float delay, BattleState nextState)
