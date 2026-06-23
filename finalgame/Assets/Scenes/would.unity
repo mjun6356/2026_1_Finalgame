@@ -380,6 +380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5abbc648f57a3d488624e5c277344fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySymbol2D
+  enemySO: {fileID: 0}
+  symbolID: 
 --- !u!1 &364381146
 GameObject:
   m_ObjectHideFlags: 0
@@ -26060,6 +26062,7 @@ GameObject:
   - component: {fileID: 964588177}
   - component: {fileID: 964588176}
   - component: {fileID: 964588178}
+  - component: {fileID: 964588179}
   m_Layer: 0
   m_Name: "\uD2B8\uB7ED1_0"
   m_TagString: Untagged
@@ -26189,6 +26192,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 6.875, y: 14}
   m_EdgeRadius: 0
+--- !u!114 &964588179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964588175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5abbc648f57a3d488624e5c277344fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySymbol2D
+  enemySO: {fileID: 11400000, guid: 5bbd306ea3589d44f8bef5eff1cde690, type: 2}
+  symbolID: isakaibus_1
 --- !u!1 &1013704594
 GameObject:
   m_ObjectHideFlags: 0
