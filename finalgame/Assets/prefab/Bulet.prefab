@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3226255926896420004}
   - component: {fileID: 6436453776772578388}
   - component: {fileID: -2742373353599042637}
+  - component: {fileID: 3602244602346749067}
   m_Layer: 0
   m_Name: Bulet
   m_TagString: Untagged
@@ -128,3 +129,17 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &3602244602346749067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5274739571048901960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac31614631859cb458687b052c3e3ef3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  speed: 10
+  damage: 10

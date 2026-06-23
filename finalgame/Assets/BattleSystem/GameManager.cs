@@ -26,6 +26,6 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", score);
         }
 
-        SceneManager.LoadScene("mainmenu");
+        SceneManager.LoadScene("meinmenu");
     }
 }
