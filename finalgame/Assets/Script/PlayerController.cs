@@ -74,13 +74,8 @@ public class PlayerController : MonoBehaviour
 
         if (currentHp <= 0)
         {
-            SaveManager.Instance.SaveGame(
-                currentHp,
-                attackPower,
-                defense,
-                GameManager.Instance.score,
-                Time.time
-            );
+           
+           
 
             GameManager.Instance.GameOver();
         }
