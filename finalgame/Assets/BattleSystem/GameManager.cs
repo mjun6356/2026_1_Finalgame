@@ -26,6 +26,6 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("HighScore", score);
         }
 
-        SceneManager.LoadScene("meinmenu");
+        SceneManager.LoadScene("YOUDIED");
     }
 }

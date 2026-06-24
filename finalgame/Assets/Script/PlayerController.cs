@@ -51,8 +51,21 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         currentHp = maxHp;
+        
+        SaveData data = SaveManager.Instance.LoadGame();
 
+        if (data != null)
+        {
+            currentHp = data.playerHP;
+            attackPower = data.attackPower;
+            defense = data.defense;
+
+            GameManager.Instance.score = data.score;
+        }
     }
+
+    public int attackPower = 10;
+
     public void TakeDamage(int damage)
     {
         int finalDamage = Mathf.Max(1, damage - defense);
@@ -61,6 +74,14 @@ public class PlayerController : MonoBehaviour
 
         if (currentHp <= 0)
         {
+            SaveManager.Instance.SaveGame(
+                currentHp,
+                attackPower,
+                defense,
+                GameManager.Instance.score,
+                Time.time
+            );
+
             GameManager.Instance.GameOver();
         }
     }

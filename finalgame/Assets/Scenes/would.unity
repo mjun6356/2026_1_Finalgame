@@ -223,7 +223,6 @@ GameObject:
   - component: {fileID: 324161727}
   - component: {fileID: 324161726}
   - component: {fileID: 324161725}
-  - component: {fileID: 324161729}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -368,20 +367,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &324161729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324161724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5abbc648f57a3d488624e5c277344fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySymbol2D
-  enemySO: {fileID: 0}
-  symbolID: 
 --- !u!1 &364381146
 GameObject:
   m_ObjectHideFlags: 0
@@ -26138,7 +26123,7 @@ Transform:
   m_GameObject: {fileID: 964588175}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7071064, w: 0.7071072}
-  m_LocalPosition: {x: 29.25, y: -3.89, z: 0}
+  m_LocalPosition: {x: 30.36, y: -3.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -26176,7 +26161,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -26201,11 +26186,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 964588175}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5abbc648f57a3d488624e5c277344fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d7d5160844ad1a4ba8b2c9de25079ae, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemySymbol2D
-  enemySO: {fileID: 11400000, guid: 5bbd306ea3589d44f8bef5eff1cde690, type: 2}
-  symbolID: isakaibus_1
+  m_EditorClassIdentifier: Assembly-CSharp::NextScene
 --- !u!1 &1013704594
 GameObject:
   m_ObjectHideFlags: 0
@@ -28571,12 +28554,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   walkSpeed: 10
   runSpeed: 15
-  maxHealth: 100
-  currentHealth: 0
-  attackPower: 50
-  defensePower: 20
-  gold: 3000
-  goldMax: 99999
+  maxHp: 100
+  currentHp: 0
+  defense: 3
   spriteUp:
   - {fileID: -138572808573400892, guid: 339566dcae7569e44b538d974054b455, type: 3}
   - {fileID: -3704102673438911313, guid: 7149eaa8659da98429b799f37612f126, type: 3}

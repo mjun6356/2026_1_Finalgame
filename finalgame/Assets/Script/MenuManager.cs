@@ -51,8 +51,9 @@ public class MenuManager : MonoBehaviour
         color.a = 1f;
         fadeImage.color = color;
 
+
         // 완전히 생겨났으니 다음 씬으로 전환
-        SceneManager.LoadScene("Would_1");
+        SceneManager.LoadScene("Would");
     }
     // 1. '게임 시작' 버튼을 누르면 실행될 함수
     
