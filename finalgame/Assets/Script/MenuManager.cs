@@ -80,7 +80,7 @@ public class MenuManager : MonoBehaviour
 
     public  void EixtButton()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
     }
 
 }

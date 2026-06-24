@@ -52,16 +52,7 @@ public class PlayerController : MonoBehaviour
     {
         currentHp = maxHp;
         
-        SaveData data = SaveManager.Instance.LoadGame();
-
-        if (data != null)
-        {
-            currentHp = data.playerHP;
-            attackPower = data.attackPower;
-            defense = data.defense;
-
-            GameManager.Instance.score = data.score;
-        }
+        
     }
 
     public int attackPower = 10;
@@ -74,9 +65,6 @@ public class PlayerController : MonoBehaviour
 
         if (currentHp <= 0)
         {
-           
-           
-
             GameManager.Instance.GameOver();
         }
     }

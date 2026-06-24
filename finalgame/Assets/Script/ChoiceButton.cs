@@ -30,8 +30,10 @@ public class ChoiceButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void EixtGame()
     {
-        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
     }
 
- 
+
+  
+
 }
